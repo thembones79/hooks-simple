@@ -1,9 +1,20 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
+import jsonPlaceholder from "../apis/jsonPlaceholder";
 
-class ResourceList extends React.Component {
-    render() {
-        return <div>{this.props.resource}</div>
-    }
-}
+const ResourceList = ({ resource }) => {
+  const [resources, setResources] = useState([]);
+
+  const fetchResource = async () => {
+    const response = await jsonPlaceholder(resource);
+    setResources(response);
+    //console.log({ state: this.state });
+  };
+
+  useEffect(() => {
+    fetchResource(resource);
+  }, []);
+
+  return <div>{resources.length}</div>;
+};
 
 export default ResourceList;
